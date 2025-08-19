@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDFA DME/ROD Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js library for the visual graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CDFA DME/ROD Calculator</h1>
+        </header>
+
+        <div class="main-grid">
+            <!-- INPUT PANEL -->
+            <div class="card" id="input-panel">
+                <h2>Inputs</h2>
+                
+                <div class="input-group">
+                    <label for="thr-elev">Threshold Elevation (ft)</label>
+                    <input type="number" id="thr-elev" value="1440">
+                </div>
+                
+                <div class="input-group">
+                    <label for="dme-at-thr">DME at Threshold (NM)</label>
+                    <input type="number" step="0.1" id="dme-at-thr" value="0.0">
+                </div>
+                
+                <div class="input-group">
+                    <label for="start-alt">Top of Descent / FAF Altitude (ft)</label>
+                    <input type="number" id="start-alt" value="5000">
+                </div>
+
+                <div class="input-group">
+                    <label for="mda">MDA (ft)</label>
+                    <input type="number" id="mda" value="1820">
+                </div>
+
+                <div class="input-group">
+                    <label for="rw-id">Runway / DME ID</label>
+                    <input type="text" id="rw-id" value="RW08">
+                </div>
+            </div>
+
+            <!-- SDF PANEL -->
+            <div class="card" id="sdf-panel">
+                <h2>Input - Step-Down Fixes (SDF)</h2>
+                <div class="sdf-grid-header">
+                    <span>ALT (ft)</span>
+                    <span>DIST (NM)</span>
+                    <span></span>
+                </div>
+                <div id="sdf-inputs">
+                    <!-- JS will generate rows here -->
+                </div>
+                <button onclick="addSdfRow()">+ Add Fix</button>
+            </div>
+
+            <!-- DME TABLE PANEL -->
+            <div class="card" id="dme-table-panel">
+                 <h2>DME Table (<span id="dme-id-header">RW08</span>)</h2>
+                 <p class="angle-display">
+                    Angle: <strong id="gp-angle">-.--°</strong> | 
+                    Percent: <strong id="gp-percent">-.--%</strong>
+                 </p>
+                 <table id="dme-output-table">
+                     <thead>
+                         <tr>
+                             <th>DIST (NM)</th>
+                             <th>ALT (ft)</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <!-- JS will populate this -->
+                     </tbody>
+                 </table>
+            </div>
+            
+            <!-- ROD TABLE PANEL -->
+            <div class="card" id="rod-table-panel">
+                <h2>Rate of Descent</h2>
+                <table id="rod-output-table">
+                    <thead>
+                        <tr>
+                            <th>GS (kts)</th>
+                            <th>80</th>
+                            <th>100</th>
+                            <th>120</th>
+                            <th>140</th>
+                            <th>160</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ROD (ft/min)</td>
+                            <td id="rod-80">---</td>
+                            <td id="rod-100">---</td>
+                            <td id="rod-120">---</td>
+                            <td id="rod-140">---</td>
+                            <td id="rod-160">---</td>
+                        </tr>
+                        <tr>
+                            <td>FAF-MAPt (min:sec)</td>
+                            <td id="time-80">--:--</td>
+                            <td id="time-100">--:--</td>
+                            <td id="time-120">--:--</td>
+                            <td id="time-140">--:--</td>
+                            <td id="time-160">--:--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- CALCULATE BUTTON -->
+            <div class="card" id="calculate-panel">
+                 <button class="calculate-btn" onclick="calculateAll()">Calculate Descent Profile</button>
+                 <p class="disclaimer">
+                     <strong>Warning:</strong> For training & situational awareness only.
+                     Not for primary navigation. Always refer to official charts.
+                 </p>
+            </div>
+
+            <!-- VISUAL PROFILE PANEL -->
+            <div class="card" id="profile-panel">
+                <h2>Descent Profile View</h2>
+                <canvas id="descentProfileChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -21,7 +21,7 @@
 
         <div class="main-grid">
 
-            <!-- CHART PARSER PANEL (NEW FEATURE) -->
+            <!-- CHART PARSER PANEL -->
             <div class="card" id="parser-panel">
                 <h2>Optional: Chart Parser Assistant</h2>
                 <div class="input-group">
@@ -36,7 +36,7 @@
                 <button id="populate-btn" onclick="populateInputsFromParser()" style="display:none;">Use This Data to Populate Inputs</button>
             </div>
 
-            <!-- INPUT PANEL (EXISTING FEATURE) -->
+            <!-- MANUAL INPUTS PANEL -->
             <div class="card" id="input-panel">
                 <h2>Manual Inputs</h2>
                 
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <!-- SDF PANEL (EXISTING FEATURE) -->
+            <!-- SDF PANEL -->
             <div class="card" id="sdf-panel">
                 <h2>Input - Step-Down Fixes (SDF)</h2>
                 <div class="sdf-grid-header">
@@ -80,7 +80,7 @@
                 <button onclick="addSdfRow()">+ Add Fix</button>
             </div>
 
-            <!-- DME TABLE PANEL (EXISTING FEATURE) -->
+            <!-- DME TABLE PANEL -->
             <div class="card" id="dme-table-panel">
                  <h2>DME Table (<span id="dme-id-header">ID</span>)</h2>
                  <p class="angle-display">
@@ -100,7 +100,7 @@
                  </table>
             </div>
             
-            <!-- ROD TABLE PANEL (EXISTING FEATURE) -->
+            <!-- ROD TABLE PANEL -->
             <div class="card" id="rod-table-panel">
                 <h2>Rate of Descent</h2>
                 <div class="input-group">
@@ -119,6 +119,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- NEW ft/NM ROW ADDED HERE -->
+                        <tr>
+                            <td>ft/NM</td>
+                            <td id="ft-nm-80" colspan="5" style="font-weight: bold; color: var(--highlight-color);">---</td>
+                        </tr>
                         <tr>
                             <td>ROD (ft/min)</td>
                             <td id="rod-80">---</td>
@@ -139,7 +144,7 @@
                 </table>
             </div>
 
-            <!-- CALCULATE & EXPORT PANEL (EXISTING FEATURE) -->
+            <!-- CALCULATE & EXPORT PANEL -->
             <div class="card" id="calculate-panel">
                  <button class="calculate-btn" onclick="calculateAll()">Calculate Descent Profile</button>
                  <div class="export-container">
@@ -152,7 +157,7 @@
                  </p>
             </div>
 
-            <!-- VISUAL PROFILE PANEL (EXISTING FEATURE) -->
+            <!-- VISUAL PROFILE PANEL -->
             <div class="card" id="profile-panel">
                 <h2>Descent Profile View</h2>
                 <canvas id="descentProfileChart"></canvas>

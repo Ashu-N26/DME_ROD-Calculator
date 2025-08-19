@@ -31,6 +31,7 @@ header h1 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
+        "parser parser parser"
         "input sdf dme"
         "rod rod dme"
         "calc calc dme"
@@ -42,6 +43,7 @@ header h1 {
     .main-grid {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
+            "parser parser"
             "input sdf"
             "dme rod"
             "calc calc"
@@ -53,6 +55,7 @@ header h1 {
     .main-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
+            "parser"
             "input"
             "sdf"
             "dme"
@@ -62,13 +65,85 @@ header h1 {
     }
 }
 
-
 .card {
     background-color: var(--card-bg-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 20px;
 }
+
+/* NEW STYLES FOR PARSER */
+#parser-panel { 
+    grid-area: parser; 
+    border-left: 3px solid var(--highlight-color);
+}
+
+#pdf-upload {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+#parser-status {
+    margin-top: 15px;
+    font-style: italic;
+    color: #aaa;
+}
+
+.parser-results {
+    margin-top: 15px;
+    background-color: var(--bg-color);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.parser-results h4 {
+    margin-top: 0;
+    color: var(--highlight-color);
+}
+
+.parser-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.parser-item:last-child {
+    border-bottom: none;
+}
+
+.parser-item .label {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.parser-item .value {
+    color: var(--text-color);
+}
+
+#populate-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #00b33c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#populate-btn:hover {
+    background-color: #009933;
+}
+/* END OF NEW STYLES */
+
 
 #input-panel { grid-area: input; }
 #sdf-panel { grid-area: sdf; }
@@ -119,6 +194,7 @@ input[type="number"], input[type="text"] {
     padding-bottom: 5px;
     border-bottom: 1px solid var(--border-color);
 }
+
 .sdf-row button {
     background: var(--danger-color);
     color: white;

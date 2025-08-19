@@ -1,0 +1,187 @@
+:root {
+    --bg-color: #1a1a1b;
+    --card-bg-color: #2d2d2e;
+    --text-color: #e0e0e0;
+    --primary-color: #4da6ff;
+    --highlight-color: #ffcc00;
+    --danger-color: #ff4d4d;
+    --border-color: #444;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+
+header h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+        "input sdf dme"
+        "rod rod dme"
+        "calc calc dme"
+        "profile profile profile";
+    gap: 15px;
+}
+
+@media (max-width: 1200px) {
+    .main-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "input sdf"
+            "dme rod"
+            "calc calc"
+            "profile profile";
+    }
+}
+
+@media (max-width: 768px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "input"
+            "sdf"
+            "dme"
+            "rod"
+            "calc"
+            "profile";
+    }
+}
+
+
+.card {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+#input-panel { grid-area: input; }
+#sdf-panel { grid-area: sdf; }
+#dme-table-panel { grid-area: dme; }
+#rod-table-panel { grid-area: rod; }
+#calculate-panel { grid-area: calc; }
+#profile-panel { grid-area: profile; }
+
+h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+input[type="number"], input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-size: 1em;
+}
+
+.sdf-grid-header, .sdf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 40px;
+    gap: 10px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.sdf-grid-header {
+    font-weight: bold;
+    color: var(--primary-color);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sdf-row button {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px 8px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+thead {
+    background-color: #3a3a3b;
+    color: var(--primary-color);
+}
+
+#dme-output-table tbody tr:first-child td {
+    font-weight: bold;
+    color: var(--highlight-color);
+}
+
+.angle-display {
+    text-align: center;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calculate-btn:hover {
+    background-color: #77baff;
+}
+
+.disclaimer {
+    margin-top: 15px;
+    font-size: 0.8em;
+    text-align: center;
+    color: var(--highlight-color);
+}
+
+#descentProfileChart {
+    background-color: var(--bg-color);
+    border-radius: 4px;
+}

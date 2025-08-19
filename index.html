@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="style.css">
     <!-- Chart.js library for the visual graph -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF libraries for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf-autotable.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -82,6 +85,10 @@
             <!-- ROD TABLE PANEL -->
             <div class="card" id="rod-table-panel">
                 <h2>Rate of Descent</h2>
+                <div class="input-group">
+                    <label for="faf-mapt-dist">FAF to MAPt Distance for Timing (NM)</label>
+                    <input type="number" step="0.1" id="faf-mapt-dist" value="6.1">
+                </div>
                 <table id="rod-output-table">
                     <thead>
                         <tr>
@@ -114,9 +121,13 @@
                 </table>
             </div>
 
-            <!-- CALCULATE BUTTON -->
+            <!-- CALCULATE & EXPORT PANEL -->
             <div class="card" id="calculate-panel">
                  <button class="calculate-btn" onclick="calculateAll()">Calculate Descent Profile</button>
+                 <div class="export-container">
+                    <button class="export-btn" id="export-csv-btn" onclick="exportToCsv()" disabled>Export CSV</button>
+                    <button class="export-btn" id="export-pdf-btn" onclick="exportToPdf()" disabled>Export PDF</button>
+                 </div>
                  <p class="disclaimer">
                      <strong>Warning:</strong> For training & situational awareness only.
                      Not for primary navigation. Always refer to official charts.

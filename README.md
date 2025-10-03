@@ -1,0 +1,1 @@
+# DME CDFA Tool\n\nThis is a full-stack app (React + Flask) for DME/CDFA calculations. Deploy on Render with Dockerfile.\n

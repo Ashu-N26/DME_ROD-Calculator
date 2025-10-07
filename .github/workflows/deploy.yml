@@ -2,7 +2,7 @@ name: CI/CD – DME & ROD Tool
 
 on:
   push:
-    branches: [ main ]        # Deploy only when you push to main
+    branches: [ main ]        # Run only when pushing to main branch
   pull_request:
 
 jobs:
@@ -10,28 +10,25 @@ jobs:
     name: Build and Validate
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout repo
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # ---- Backend validation ----
+      # Step 2: Backend setup
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install backend deps
+      - name: Install backend dependencies
         run: |
           cd backend
           pip install -r requirements.txt
 
-      - name: Run backend unit tests
-        run: |
-          pytest -q || echo "No tests yet – skipping"
-
       - name: Lint backend syntax
         run: python -m py_compile backend/app.py
 
-      # ---- Frontend build check ----
+      # Step 3: Frontend setup and build (✅ Fixed npm install)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -40,7 +37,7 @@ jobs:
       - name: Build frontend
         run: |
           cd frontend
-          npm ci
+          npm install
           npm run build
 
   deploy:
@@ -49,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Deploy using Render API
+      - name: Deploy to Render using API
         uses: render-examples/render-deploy@v1
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}

@@ -2,19 +2,20 @@ name: CI/CD – DME & ROD Tool
 
 on:
   push:
-    branches: [ main ]        # Run only when pushing to main branch
+    branches: [ main ]        # Trigger on every push to main
   pull_request:
 
 jobs:
   build-test:
     name: Build and Validate
     runs-on: ubuntu-latest
+
     steps:
-      # Step 1: Checkout repo
+      # 🧩 Step 1 – Checkout repository
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # Step 2: Backend setup
+      # 🐍 Step 2 – Set up Python backend
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -28,16 +29,16 @@ jobs:
       - name: Lint backend syntax
         run: python -m py_compile backend/app.py
 
-      # Step 3: Frontend setup and build (✅ Fixed npm install)
+      # ⚙️ Step 3 – Build React frontend
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Build frontend
+      - name: Build frontend (ignore peer-dep conflicts)
         run: |
           cd frontend
-          npm install
+          npm install --legacy-peer-deps
           npm run build
 
   deploy:
@@ -45,6 +46,7 @@ jobs:
     needs: build-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+
     steps:
       - name: Deploy to Render using API
         uses: render-examples/render-deploy@v1

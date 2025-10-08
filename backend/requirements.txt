@@ -1,4 +1,31 @@
-Flask==2.2.5
-gunicorn==20.1.0
-flask-cors==3.0.10
+# Web framework & server
+fastapi
+uvicorn[standard]
+
+# File uploads & static file serving
+python-multipart
+aiofiles
+
+# OCR & image/pdf handling
+pytesseract
+Pillow
+PyMuPDF          # fitz, good for extracting text from native PDFs
+pdf2image        # optional fallback if you want to rasterize PDFs to images
+
+# Table extraction & PDF parsing
+camelot-py[cv]   # best-effort table extraction (requires system deps)
+tabula-py        # optional fallback (requires Java)
+
+# Data handling & exports
+pandas
+numpy
+openpyxl         # write Excel files if you implement .xlsx export
+PyPDF2           # helpful PDF utilities / fallback parsing
+
+# Headless image processing for Camelot / OpenCV usage
+opencv-python-headless
+
+# Utility / optional helpers
+python-dateutil
+
 

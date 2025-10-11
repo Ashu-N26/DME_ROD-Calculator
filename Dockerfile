@@ -1,8 +1,32 @@
-FROM python:3.11-slim
+# Dockerfile — corrected (Option A)
+# Build frontend with Node, then serve with Flask in final stage
 
+############
+# Build frontend
+############
+FROM node:18 AS build-frontend
+WORKDIR /app/frontend
+
+# Copy package files first for caching (package-lock optional)
+COPY frontend/package.json frontend/package-lock.json* ./
+
+# Install frontend deps (use --legacy-peer-deps in CI if needed,
+# but local npm install here is fine)
+RUN npm install
+
+# Copy frontend source and build
+COPY frontend/ ./
+RUN npm run build
+
+
+############
+# Final stage: Python server
+############
+FROM python:3.11-slim
 WORKDIR /app
 
-# Install system packages required by OCR/table libs
+# Install system packages required by OCR / image processing libs
+# NOTE: replaced libgl1-mesa-glx (no candidate) with libgl1 and libgl1-mesa-dri
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     default-jre \
@@ -16,26 +40,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ghostscript \
     libjpeg-dev \
     zlib1g-dev \
-    libgl1-mesa-glx \
+    libgl1 \
+    libgl1-mesa-dri \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first (helps layer caching)
-COPY backend/requirements.txt .
+# Copy backend source
+COPY backend/ ./backend/
 
-# Install Python deps
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Copy built frontend assets from the previous stage
+COPY --from=build-frontend /app/frontend/dist ./frontend/dist
 
-# Copy application code
-COPY backend/ ./backend
-COPY frontend/ ./frontend
+# Install Python (backend) dependencies
+WORKDIR /app/backend
+RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 8000
+ENV PORT=5000
+EXPOSE 5000
 
-# Use Render's PORT env var at runtime
-CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"]
-
-
-
-
+# Run Gunicorn to serve the Flask app (wsgi.py -> app)
+CMD ["gunicorn", "wsgi:app", "-b", "0.0.0.0:5000", "-w", "2"]
